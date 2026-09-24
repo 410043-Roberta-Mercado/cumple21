@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡21!</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Fuente Retro DOS / IBM (VT323) -->
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <!-- Tu CSS Personalizado -->
+    <link rel="stylesheet" href="css/css.css">
+</head>
+    <body>
+        <header>
+            <img src="css/banner.jpg" alt="Banner de la página">
+            <h1>
+                ¡Te invito a mi pumple!
+            </h1>
+            <nav>
+                <a href="principal.html">
+                    Principal ▲
+                </a>
+                <a href="asistencia.html">
+                    Confirmá asistencia 
+                </a>
+            </nav>
+        </header>
+       <main>
+            <!-- Ventana contenedora principal: Información del Evento -->
+            <!-- Ventana contenedora principal: Información del Evento -->
+            <section class="bordemain popup-ventanita">
+                <h2 class="titulo-ventana">📋 Información del Evento</h2>
+                
+                <!-- Contenedor en línea para las 3 sub-cajas -->
+                <div class="info-grid-3">
+                    
+                    <!-- Sub-caja 1: Fecha (Estilo Ventana Notepad) -->
+                    <div class="retro-subbox latido-anim" onmouseenter="reproducirSonido()">
+                        <div class="subbox-titlebar">
+                            <span>fecha.txt</span>
+                            <div class="subbox-btns"><span>_</span><span>□</span><span>X</span></div>
+                        </div>
+                        <div class="subbox-content">
+                            <h3>📅 Fecha</h3>
+                            <p>El día sábado 03/10</p>
+                        </div>
+                    </div>
+
+                    <!-- Sub-caja 2: Horario (Estilo Ventana Notepad) -->
+                    <div class="retro-subbox latido-anim" onmouseenter="reproducirSonido()">
+                        <div class="subbox-titlebar">
+                            <span>horario.txt</span>
+                            <div class="subbox-btns"><span>_</span><span>□</span><span>X</span></div>
+                        </div>
+                        <div class="subbox-content">
+                            <h3>⌚ Horario</h3>
+                            <p>21:00pm a 3:00am hs</p>
+                        </div>
+                    </div>
+
+                    <!-- Sub-caja 3: Ubicación (Estilo Ventana Notepad) -->
+                    <div class="retro-subbox latido-anim" onmouseenter="reproducirSonido()">
+                        <div class="subbox-titlebar">
+                            <span>lugar.txt</span>
+                            <div class="subbox-btns"><span>_</span><span>□</span><span>X</span></div>
+                        </div>
+                        <div class="subbox-content">
+                            <h3>📍 Ubicación</h3>
+                            <a href="https://www.instagram.com/porazarcrew?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw==">Por Azar Crew</a>
+                            <p>San Lorenzo 443</p>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Ventana contenedora principal: Reproductor MP3 -->
+            <section class="bordemain popup-ventanita winamp-player">
+                <!-- Barra de título de la aplicación -->
+                <div class="winamp-titlebar">
+                    <span>Winamp v2.91 - [Reproduciendo]</span>
+                    <div class="winamp-controls-box">
+                        <span>_</span><span>□</span><span>X</span>
+                    </div>
+                </div>
+
+                <!-- Menú superior típico de programa viejo -->
+                <div class="winamp-menu">
+                    <span>File</span>
+                    <span>Play</span>
+                    <span>Options</span>
+                    <span>View</span>
+                    <span>Help</span>
+                </div>
+
+                <!-- Pantalla digital LED (Display) -->
+                <div class="winamp-display">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span id="track-timer">00:00</span>
+                        <span class="winamp-kbps">KBPS: 320 · STEREO</span>
+                    </div>
+                    <div id="track-title" class="winamp-marquee">
+                        > Cargar pista...
+                    </div>
+                </div>
+
+                <!-- Elemento de audio HTML5 oculto -->
+                <audio id="audioPlayer" src="css/musica/because of you.mp3"></audio>
+
+                <!-- Panel inferior con botones de control clásicos -->
+                <div class="winamp-bottom-panel">
+                    <div class="winamp-buttons">
+                        <button type="button" onmouseenter="reproducirSonido()" onclick="cambiarCancion(-1)" title="Anterior">⏮</button>
+                        <button type="button" onmouseenter="reproducirSonido()" onclick="togglePlay()" title="Play/Pausa">▶ / ⏸</button>
+                        <button type="button" onmouseenter="reproducirSonido()" onclick="cambiarCancion(1)" title="Siguiente">⏭</button>
+                    </div>
+                    <div class="winamp-brand">WINAMP</div>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <img src="css/banner.jpg" alt="Banner de la página">
+            <a href="easteregg.html">
+                    Septiembre 30 2005
+                </a>
+        </footer>
+        <script>
+            // Función de audio retro (bip clásico)
+            function reproducirSonido() {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(440, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(110, ctx.currentTime + 0.05);
+                gain.gain.setValueAtTime(0.08, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.05);
+            }
+
+            // Lógica del Reproductor MP3
+            const playlist = [
+                { nombre: "Pista_01.mp3", url: "css/musica/because of you.mp3" },
+                { nombre: "Pista_02.mp3", url: "css/musica/Te Quiero a Ti.mp3" },
+                { nombre: "Pista_03.mp3", url: "css/musica/Darude - Sandstorm.mp3" },
+                { nombre: "Pista_04.mp3", url: "css/musica/Wisin & Yandel - Pam Pam (Official Video).mp3" },
+                { nombre: "Pista_05.mp3", url: "css/musica/Evanescence - Sweet Sacrifice.mp3" },
+                { nombre: "Pista_06.mp3", url: "css/musica/Los Dueños del Pabellon.mp3" },
+                { nombre: "Pista_07.mp3", url: "css/musica/Beautiful Player.mp3" },
+                { nombre: "Pista_08.mp3", url: "css/musica/Crazy Frog - Axel F.mp3" }
+            ];
+            let indiceActual = 0;
+            const player = document.getElementById('audioPlayer');
+            const titleEl = document.getElementById('track-title');
+
+            function togglePlay() {
+                if (player.paused) {
+                    player.play();
+                    titleEl.innerText = "> Reproduciendo: " + playlist[indiceActual].nombre;
+                } else {
+                    player.pause();
+                    titleEl.innerText = "> Pausado: " + playlist[indiceActual].nombre;
+                }
+            }
+
+            function cambiarCancion(direccion) {
+                indiceActual = (indiceActual + direccion + playlist.length) % playlist.length;
+                player.src = playlist[indiceActual].url;
+                player.play();
+                titleEl.innerText = "> Reproduciendo: " + playlist[indiceActual].nombre;
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CONTACTO / RSVP</title>
+        <!-- Fuente Retro DOS / IBM (VT323) -->
+        <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+        <!-- Tu CSS Personalizado (asegurate de que la ruta coincida con tu estructura) -->
+        <link rel="stylesheet" href="css/css.css">
+        <!-- Librería jsPDF para generar el archivo de descarga -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    </head>
+    <body class="contacto">
+        <header>
+            <img src="css/banner.jpg" alt="Banner de la página">
+            <h1> Confirmá tu asistencia </h1>
+            <nav>
+                <a href="principal.html">
+                    Principal ▲
+                </a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="bordemain">
+                <h2>Formulario</h2>
+                <p>Rellená este formulario para confirmar tu asistencia y pasame el pdf por wp!</p>
+                
+                <form id="rsvpForm" onsubmit="generarPDF(event)">
+                    <fieldset>
+                        <legend>Datos personales</legend>
+                        <label for="nombre">Nombre*</label>
+                        <input type="text" id="nombre" name="nombre" placeholder="nombre" required>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Asisto, acudo?</legend>
+                        <label for="asistencia">Venís?*</label>
+                        <select id="asistencia" name="asistencia" required>
+                            <option value="">Selecciona una opción</option>
+                            <option value="sí">sí</option>
+                            <option value="no">no</option>
+                            <option value="no, te odio">no, te odio</option>
+                            <option value="la 3era opcion">la 3era opcion</option>
+                            <option value="todas menos la 1era">todas menos la 1era</option>
+                        </select>
+                        
+                        <label for="mensaje">Mensajito</label>
+                        <textarea id="mensaje" name="mensaje" rows="5" placeholder="Escribí cualquier pelotudez si querés"></textarea>
+                    </fieldset>
+
+                    <div style="text-align: center;">
+                        <button type="submit">Terminé</button>
+                        <button type="reset">Resetear formulario (ahre para qué)</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+
+        <footer>
+            <img src="css/banner.jpg" alt="Banner de la página">
+            <!-- Link secreto al footer oculto del 30 de septiembre -->
+            <p>Septiembre 30 2005</p>
+        </footer>
+
+        <!-- Script para generar el PDF al hacer click en Terminé -->
+        <script>
+            function generarPDF(event) {
+                event.preventDefault(); // Evita recargar la página
+
+                const nombre = document.getElementById('nombre').value;
+                const asistencia = document.getElementById('asistencia').value;
+                const mensaje = document.getElementById('mensaje').value;
+
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+
+                // Estilo y contenido del PDF
+                doc.setFont("courier", "bold");
+                doc.setFontSize(16);
+                doc.text("===CONFIRMACIÓN===", 15, 20);
+
+                doc.setFont("courier", "normal");
+                doc.setFontSize(12);
+                doc.text(`Invitado/a: ${nombre}`, 15, 35);
+                doc.text(`Respuesta: ${asistencia}`, 15, 45);
+                doc.text(`Mensaje:`, 15, 55);
+
+                const splitMensaje = doc.splitTextToSize(mensaje || "(Sin mensaje)", 180);
+                doc.text(splitMensaje, 15, 65);
+
+                doc.text("--------------------------------------------------", 15, 95);
+                doc.text("¡Guardá este PDF y mandámelo al WhatsApp!", 15, 105);
+
+                // Descarga automática
+                doc.save(`rsvp_${nombre.replace(/\s+/g, '_')}.pdf`);
+                alert("¡Listo! El PDF se descargó correctamente.");
+            }
+        </script>
+    </body>
+</html>

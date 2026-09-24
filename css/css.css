@@ -1,0 +1,446 @@
+/* 1. RESETS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 2. VARIABLES Y2K / FRUTIGER AERO */
+:root {
+    --fondo: #0b0214;               /* Fondo general oscuro violáceo */
+    --color-extra: #1a001a;         /* Fondo de cajas / contenedores pop-up */
+    --letras: #e0d0ff;              /* Letras claras lilas/blancas */
+    --letras-extra: #ff3399;        /* Fucsia brillante estilo MySpace/Y2K */
+    --borde-ventana: #ff66cc;       /* Rosa claro para bordes de ventanas */
+    
+    /* Medidas */
+    --espacio: 1rem;
+    --radio: 0px;                   /* Bordes rectos típicos de ventanas de los 2000 */
+    --ancho-max: 1000px;
+    
+    /* Tipografía pixelada / retro */
+    --fuente: 'VT323', monospace, sans-serif;
+}
+
+/* 3. ELEMENTOS BASE */
+body {
+    font-family: var(--fuente);
+    color: var(--letras);
+    background-color: var(--fondo);
+    line-height: 1.4;
+    font-size: 22px;
+    cursor: default;
+}
+
+input, select, textarea, button {
+    font-family: inherit;
+    font-size: inherit;
+}
+
+h1 {
+    font-size: 2rem;
+    line-height: 1.2;
+    text-align: center;
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin-bottom: var(--espacio);
+    text-align: center;
+}
+
+h3 {
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+p {
+    margin-bottom: var(--espacio);
+    text-align: center;
+}
+
+a {
+    color: var(--letras);
+    text-decoration: none;
+}
+
+a:visited {
+    color: var(--letras-extra);
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+nav a {
+    display: inline-block;
+    padding: 0.4rem 0.9rem;
+    border-radius: var(--radio);
+    margin-right: 0.3rem;
+}
+
+img {
+    width: 100%;
+    border-radius: 5%;
+}
+
+/* 4. LAYOUT Y CONTENEDORES POP-UP */
+header img, footer img {
+    width: 100%;
+    border-radius: 1%;
+    font-size: 0.85rem;
+    margin-bottom: 2rem;
+}
+
+ul {
+    list-style: circle;
+    text-align: center;
+}
+
+li {
+    margin-bottom: 3%;
+}
+
+main {
+    max-width: var(--ancho-max);
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* Estilo unificado y limpio para las secciones (pop-ups) */
+section {
+    background-color: var(--color-extra);
+    background-image: radial-gradient(#330033 15%, transparent 16%), radial-gradient(#330033 15%, transparent 16%);
+    background-size: 4px 4px;
+    background-position: 0 0, 2px 2px;
+    border: 2px solid;
+    border-color: var(--borde-ventana) #330033 #330033 var(--borde-ventana);
+    box-shadow: 4px 4px 0px #000000;
+    border-radius: var(--radio);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+footer {
+    text-align: center;
+    margin-top: 3rem;
+    padding: 1.5rem 0;
+}
+
+footer nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 1rem 0;
+}
+
+footer a {
+    display: inline-block;
+    text-align: center;
+}
+
+/* 5. COMPONENTES Y FORMULARIO */
+table {
+    width: 70%;
+    border-collapse: collapse;
+    margin-top: var(--espacio);
+}
+
+.bordemain {
+    border: 2px solid var(--borde-ventana);
+    border-radius: var(--radio);
+}
+
+fieldset {
+    border: 2px solid;
+    border-color: #330033 var(--borde-ventana) var(--borde-ventana) #330033;
+    border-radius: var(--radio);
+    padding: 1.2rem;
+    margin-bottom: 1.2rem;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+legend {
+    font-weight: 600;
+    color: var(--letras-extra);
+    padding: 0 0.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-weight: 500;
+    font-size: 1rem;
+    color: var(--letras);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    padding: 0.4rem 0.6rem;
+    margin-bottom: 1rem;
+    border: 2px solid;
+    border-color: #330033 var(--borde-ventana) var(--borde-ventana) #330033;
+    border-radius: var(--radio);
+    background-color: var(--fondo);
+    color: var(--letras);
+}
+
+::placeholder {
+    color: var(--letras); 
+    opacity: 0.5;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+}
+
+button {
+    padding: 0.5rem 1.2rem;
+    border: 2px solid;
+    border-color: var(--borde-ventana) #330033 #330033 var(--borde-ventana);
+    border-radius: var(--radio);
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--letras);
+}
+
+button[type="submit"] {
+    background-color: var(--letras-extra);
+}
+
+button[type="reset"] {
+    background-color: #330033;
+}
+
+/* 6. ESTADOS */
+button[type="submit"]:hover {
+    background-color: var(--fondo);
+    color: var(--letras-extra);
+}
+
+button[type="reset"]:hover {
+    background-color: var(--letras-extra);
+    color: var(--fondo);
+}
+
+header nav a:hover {
+    background-color: var(--color-extra);
+    color: var(--letras-extra);
+}
+
+header nav a:focus {
+    outline: 2px solid var(--letras-extra);
+    outline-offset: 0;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: 2px solid var(--letras-extra);
+}
+
+header nav a, button, input, select, textarea {
+    transition: 0.1s ease;
+}
+
+h1::before, h1::after {
+    content: "▣ ";
+    color: var(--letras-extra);
+}
+
+legend::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: var(--letras-extra);
+    margin-top: 4px;
+}
+
+/* Sub-cajas de información (Fecha, Horario, Ubicación) */
+.info-grid-3 {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.retro-subbox {
+    flex: 1;
+    min-width: 200px;
+    background-color: var(--fondo);
+    border: 2px solid;
+    border-color: var(--borde-ventana) #330033 #330033 var(--borde-ventana);
+    padding: 1rem;
+    text-align: center;
+}
+
+/* Animación de Latido */
+@keyframes latido {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); box-shadow: 0 0 10px var(--letras-extra); }
+    100% { transform: scale(1); }
+}
+
+.latido-anim {
+    animation: latido 0.7s infinite ease-in-out;
+}
+
+.latido-anim:hover {
+    animation-play-state: paused;
+    border-color: var(--letras-extra);
+    background-color: var(--color-extra);
+}
+
+/* --- ESTILOS DEL REPRODUCTOR ESTILO WINAMP / WMP --- */
+.winamp-player {
+    background-color: #2b0e3b !important;
+    border: 2px solid !important;
+    border-color: #aa44ff #110022 #110022 #aa44ff !important;
+    padding: 0.5rem !important;
+}
+
+.winamp-titlebar {
+    background: linear-gradient(90deg, #440066, #9900cc);
+    color: #ffffff;
+    font-size: 14px;
+    padding: 2px 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.winamp-controls-box span {
+    background: #c0c0c0;
+    color: black;
+    border: 1px solid;
+    border-color: #ffffff #555555 #555555 #ffffff;
+    padding: 0px 4px;
+    font-size: 10px;
+    margin-left: 2px;
+}
+
+.winamp-menu {
+    background-color: #1a002b;
+    padding: 2px 6px;
+    font-size: 16px;
+    color: #ccaaff;
+    display: flex;
+    gap: 15px;
+    border-bottom: 1px solid #440066;
+    margin-bottom: 8px;
+}
+
+.winamp-display {
+    background-color: #05010a;
+    border: 2px solid;
+    border-color: #110022 #aa44ff #aa44ff #110022;
+    padding: 8px 12px;
+    color: #00ffff;
+    font-family: monospace;
+    font-size: 18px;
+    margin-bottom: 8px;
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.8);
+}
+
+.winamp-kbps {
+    font-size: 12px;
+    color: #ff66cc;
+}
+
+.winamp-marquee {
+    margin-top: 4px;
+    color: #ffffff;
+    font-size: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.winamp-bottom-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1f052e;
+    padding: 6px;
+    border: 1px solid #440066;
+}
+
+.winamp-buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.winamp-buttons button {
+    background-color: #3b0e56;
+    color: #ffffff;
+    border: 2px solid;
+    border-color: #aa44ff #110022 #110022 #aa44ff;
+    padding: 0.2rem 0.8rem;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.winamp-buttons button:hover {
+    background-color: #551a8b;
+    border-color: #ff66cc;
+}
+
+.winamp-brand {
+    font-weight: bold;
+    font-size: 16px;
+    color: #ff3399;
+    letter-spacing: 2px;
+}
+/* Estilo de sub-ventanas tipo Notepad para Fecha, Horario y Ubicación */
+.retro-subbox {
+    flex: 1;
+    min-width: 220px;
+    background-color: var(--fondo);
+    border: 2px solid;
+    border-color: #aa44ff #110022 #110022 #aa44ff;
+    padding: 0px; /* Sin padding general para que la barra de título ocupe todo el ancho */
+    text-align: center;
+}
+
+/* Barra de título de cada sub-caja */
+.subbox-titlebar {
+    background: linear-gradient(90deg, #440066, #9900cc);
+    color: #ffffff;
+    font-size: 13px;
+    padding: 2px 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    border-bottom: 1px solid #2b0e3b;
+    text-align: left;
+}
+
+/* Botoncitos de minimizar/maximizar/cerrar de las sub-ventanas */
+.subbox-btns span {
+    background: #c0c0c0;
+    color: black;
+    border: 1px solid;
+    border-color: #ffffff #555555 #555555 #ffffff;
+    padding: 0px 3px;
+    font-size: 9px;
+    margin-left: 2px;
+}
+
+/* Contenido interior de la sub-ventana */
+.subbox-content {
+    padding: 1rem 0.5rem 0.5rem 0.5rem;
+}
