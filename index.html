@@ -18,10 +18,10 @@
                 ¡Te invito a mi pumple!
             </h1>
             <nav>
-                <a href="index.html">
+                <a onmouseenter="reproducirSonido()" href="index.html">
                     Principal ▲
                 </a>
-                <a href="asistencia.html">
+                <a onmouseenter="reproducirSonido()" href="asistencia.html">
                     Confirmá asistencia 
                 </a>
             </nav>
@@ -121,7 +121,7 @@
         </main>
         <footer>
             <img src="css/banner.jpg" alt="Banner de la página">
-            <a href="easteregg.html">
+            <a onmouseenter="reproducirSonido()" href="easteregg.html">
                     Septiembre 30 2005
                 </a>
         </footer>
@@ -159,6 +159,9 @@
 
             function togglePlay() {
                 if (player.paused) {
+                    if (!player.src || player.src === "") {
+                        player.src = playlist[indiceActual].url;
+                    }
                     player.play();
                     titleEl.innerText = "> Reproduciendo: " + playlist[indiceActual].nombre;
                 } else {
@@ -173,6 +176,22 @@
                 player.play();
                 titleEl.innerText = "> Reproduciendo: " + playlist[indiceActual].nombre;
             }
+
+            //EVENTO AUTOMÁTICO AL TERMINAR CANCIÓN ---
+            player.addEventListener('ended', function() {
+                // Incrementa el índice para pasar a la siguiente
+                indiceActual++;
+                
+                // Si llega al final de la lista, vuelve a la Pista 01 (bucle continuo)
+                if (indiceActual >= playlist.length) {
+                    indiceActual = 0;
+                }
+                
+                // Carga la nueva URL, la reproduce y actualiza el display LED
+                player.src = playlist[indiceActual].url;
+                player.play();
+                titleEl.innerText = "> Reproduciendo: " + playlist[indiceActual].nombre;
+            });
         </script>
     </body>
 </html>

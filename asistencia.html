@@ -8,26 +8,24 @@
         <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
         <!-- Tu CSS Personalizado (asegurate de que la ruta coincida con tu estructura) -->
         <link rel="stylesheet" href="css/css.css">
-        <!-- Librería jsPDF para generar el archivo de descarga -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     </head>
     <body class="contacto">
         <header>
             <img src="css/banner.jpg" alt="Banner de la página">
             <h1> Confirmá tu asistencia </h1>
             <nav>
-                <a href="index.html">
+                <a onmouseenter="reproducirSonido()" href="index.html">
                     Principal ▲
                 </a>
             </nav>
         </header>
-
         <main>
             <section class="bordemain">
                 <h2>Formulario</h2>
-                <p>Rellená este formulario para confirmar tu asistencia y pasame el pdf por wp!</p>
+                <p>Rellená este formulario para confirmar tu asistencia y pasame el mensaje por WhatsApp!</p>
                 
-                <form id="rsvpForm" onsubmit="generarPDF(event)">
+                <!-- enviarWhatsApp(event) -->
+                <form id="rsvpForm" onsubmit="enviarWhatsApp(event)">
                     <fieldset>
                         <legend>Datos personales</legend>
                         <label for="nombre">Nombre*</label>
@@ -51,8 +49,8 @@
                     </fieldset>
 
                     <div style="text-align: center;">
-                        <button type="submit">Terminé</button>
-                        <button type="reset">Resetear formulario (ahre para qué)</button>
+                        <button type="submit" onmouseenter="reproducirSonido()">Terminé</button>
+                        <button type="reset" onmouseenter="reproducirSonido()">Resetear formulario (ahre para qué)</button>
                     </div>
                 </form>
             </section>
@@ -60,42 +58,45 @@
 
         <footer>
             <img src="css/banner.jpg" alt="Banner de la página">
-            <!-- Link secreto al footer oculto del 30 de septiembre -->
-            <p>Septiembre 30 2005</p>
+            <a onmouseenter="reproducirSonido()" href="easteregg.html">
+                    Septiembre 30 2005
+                </a>
         </footer>
-
-        <!-- Script para generar el PDF al hacer click en Terminé -->
+        <!-- Script para generar mensaje -->
         <script>
-            function generarPDF(event) {
+            function enviarWhatsApp(event) {
                 event.preventDefault(); // Evita recargar la página
-
                 const nombre = document.getElementById('nombre').value;
                 const asistencia = document.getElementById('asistencia').value;
                 const mensaje = document.getElementById('mensaje').value;
+                const NumeroRober = "5493516871262"; 
 
-                const { jsPDF } = window.jspdf;
-                const doc = new jsPDF();
+                // texto predeterminado que se va a enviar solo
+                const texto = `Confirmación de asistencia:\n\n*Nombre:* ${nombre}\n*¿Venís?:* ${asistencia}\n*Mensajito:* ${mensaje || "(Sin mensaje)"}`;
 
-                // Estilo y contenido del PDF
-                doc.setFont("courier", "bold");
-                doc.setFontSize(16);
-                doc.text("===CONFIRMACIÓN===", 15, 20);
+                //texto codificado para url
+                const textoCodificado = encodeURIComponent(texto);
 
-                doc.setFont("courier", "normal");
-                doc.setFontSize(12);
-                doc.text(`Invitado/a: ${nombre}`, 15, 35);
-                doc.text(`Respuesta: ${asistencia}`, 15, 45);
-                doc.text(`Mensaje:`, 15, 55);
+                //link universal de WhatsApp
+                const urlWhatsApp = `https://api.whatsapp.com/send?phone=${NumeroRober}&text=${textoCodificado}`;
 
-                const splitMensaje = doc.splitTextToSize(mensaje || "(Sin mensaje)", 180);
-                doc.text(splitMensaje, 15, 65);
+                // Los redirige automáticamente a WhatsApp con el mensaje escrito
+                window.location.href = urlWhatsApp;
+            }
 
-                doc.text("--------------------------------------------------", 15, 95);
-                doc.text("¡Guardá este PDF y mandámelo al WhatsApp!", 15, 105);
-
-                // Descarga automática
-                doc.save(`rsvp_${nombre.replace(/\s+/g, '_')}.pdf`);
-                alert("¡Listo! El PDF se descargó correctamente.");
+            function reproducirSonido() {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(440, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(110, ctx.currentTime + 0.05);
+                gain.gain.setValueAtTime(0.08, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.05);
             }
         </script>
     </body>

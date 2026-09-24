@@ -46,7 +46,7 @@
              <h1>
                 Fuentes
             </h1>
-            <nav>
+            <nav onmouseenter="reproducirSonido()">
                 <a href="https://web.archive.org/web/20140224115212/http://www.parlament.cat/porteso/estatut/estatut_english.pdf">
                     cataluña
                 </a>
@@ -60,10 +60,25 @@
             </nav>
 
 
-            <a href="index.html">
+            <a onmouseenter="reproducirSonido()" href="index.html">
                     Volver al inicio
                 </a>
             <img src="css/banner.jpg" alt="Banner de la página">
         </footer>
+        <script>function reproducirSonido() {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(440, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(110, ctx.currentTime + 0.05);
+                gain.gain.setValueAtTime(0.08, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.05);
+            }
+        </script>
     </body>
 </html>
